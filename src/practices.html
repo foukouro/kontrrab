@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практика 1 - Формы и таблицы</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="header">
+            <h1>Практика 1: Формы и таблицы</h1>
+        </header>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link">Главная</a></li>
+                <li class="nav-item"><a href="practice1.html" class="nav-link">Практика 1</a></li>
+                <li class="nav-item"><a href="practice2.html" class="nav-link">Практика 2</a></li>
+                <li class="nav-item"><a href="practice3.html" class="nav-link">Практика 3</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section class="about-me">
+                <h3>Форма обратной связи</h3>
+                <form action="#" method="post">
+                    <div style="margin-bottom: 15px;">
+                        <label for="name">Имя:</label>
+                        <input type="text" id="name" name="name" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label for="message">Сообщение:</label>
+                        <textarea id="message" name="message" rows="4" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                    </div>
+                    
+                    <button type="submit" style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Отправить</button>
+                </form>
+            </section>
+
+            <section class="about-me" style="margin-top: 30px;">
+                <h3>Таблица расписания</h3>
+                <table border="1" style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 10px;">День недели</th>
+                        <th style="padding: 10px;">Предмет</th>
+                        <th style="padding: 10px;">Время</th>
+                        <th style="padding: 10px;">Преподаватель</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Понедельник</td>
+                        <td style="padding: 10px;">Веб-разработка</td>
+                        <td style="padding: 10px;">10:00-11:30</td>
+                        <td style="padding: 10px;">Иванов А.А.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Среда</td>
+                        <td style="padding: 10px;">Базы данных</td>
+                        <td style="padding: 10px;">14:00-15:30</td>
+                        <td style="padding: 10px;">Петрова В.С.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Пятница</td>
+                        <td style="padding: 10px;">JavaScript</td>
+                        <td style="padding: 10px;">12:00-13:30</td>
+                        <td style="padding: 10px;">Сидоров П.К.</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Практические работы</p>
+        </footer>
+    </div>
+</body>
+</html>
