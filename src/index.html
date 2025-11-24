@@ -1,63 +1,566 @@
-
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Семестровая работа</title>
-        <link rel="stylesheet" href="css/style/styles.css">
-    </head>
-    <body>
-        <div class="page-container">
-            <div class="header">Навигация по сайту</div>
-           
-            <div class="nav">
-                
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Практические занятия 15-18</title>
+    <style>
+        /* Базовые сбросы и переменные */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --text-color: #0b1020;
+            --text-light: #64748b;
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+            --border-color: #e2e8f0;
+            --error-color: #dc2626;
+            --success-color: #16a34a;
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --radius: 0.5rem;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 0;
+        }
+
+        /* Skip link для доступности */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 10px;
+            z-index: 10000;
+            padding: 10px;
+            background: #111;
+            color: #fff;
+            border-radius: var(--radius);
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            top: 10px;
+        }
+
+        /* Навигация */
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--surface-color);
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .nav-link[aria-current="page"] {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Кнопка темы */
+        .theme-toggle {
+            background: var(--surface-color);
+            border: 2px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        /* Основной контент */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Герой секция */
+        .hero {
+            padding: 3rem 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+
+        .hero-title {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Адаптивная сетка */
+        .projects-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .project-card {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .project-card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card-description {
+            color: var(--text-light);
+        }
+
+        /* Секции */
+        .section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Демонстрация доступности */
+        .a11y-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .a11y-component {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Формы */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Lighthouse демонстрация */
+        .lighthouse-demo {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin: 2rem 0;
+        }
+
+        .problem-section {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1rem 0;
+        }
+
+        .solution-section {
+            background: #d1ecf1;
+            border: 2px solid #bee5eb;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1rem 0;
+        }
+
+        .bad-btn {
+            background: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .good-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: var(--radius);
+        }
+
+        /* Модальное окно */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Футер */
+        .footer {
+            background: var(--surface-color);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        /* Утилиты */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .a11y-demo {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Фокус для доступности */
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus,
+        a:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip link для доступности -->
+    <a class="skip-link" href="#main">Перейти к основному содержимому</a>
+
+    <div class="page">
+        <!-- Навигация -->
+        <header class="header">
+            <nav class="nav" aria-label="Основная навигация">
                 <ul class="nav-list">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
-                    <li class="nav-item"><a class="nav-link" href="news.html">Новости</a></li>
-                    <li class="nav-item"><a class="nav-link" href="practices.html">Практики</a></li> 
-                    <li class="nav-item"><a class="nav-link" href="goods.html">Товары</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+                    <li><a href="#home" class="nav-link" aria-current="page">Главная</a></li>
+                    <li><a href="#adaptive" class="nav-link">Адаптивность</a></li>
+                    <li><a href="#accessibility" class="nav-link">Доступность</a></li>
+                    <li><a href="#lighthouse" class="nav-link">Lighthouse</a></li>
                 </ul>
+
+                <button class="theme-toggle" aria-label="Переключить тему">
+                    🌙
+                </button>
+            </nav>
+        </header>
+
+        <main id="main">
+            <!-- Герой секция -->
+            <section class="hero" id="home">
+                <div class="container">
+                    <h1 class="hero-title">Практические занятия 15-18</h1>
+                    <p class="hero-description">Адаптивный дизайн, доступность и современные технологии</p>
+                    <button class="good-btn open-modal-btn">Узнать больше</button>
+                </div>
+            </section>
+
+            <!-- Адаптивность -->
+            <section class="section" id="adaptive">
+                <div class="container">
+                    <h2 class="section-title">Адаптивный дизайн</h2>
+
+                    <div class="projects-preview-grid">
+                        <article class="project-card">
+                            <h3 class="project-card-title">CSS Grid</h3>
+                            <p class="project-card-description">Современная система сеток для адаптивных макетов</p>
+                        </article>
+                        <article class="project-card">
+                            <h3 class="project-card-title">Flexbox</h3>
+                            <p class="project-card-description">Гибкая раскладка элементов</p>
+                        </article>
+                        <article class="project-card">
+                            <h3 class="project-card-title">Медиазапросы</h3>
+                            <p class="project-card-description">Адаптация под разные устройства</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Доступность -->
+            <section class="section section-light" id="accessibility">
+                <div class="container">
+                    <h2 class="section-title">Доступность (A11y)</h2>
+
+                    <div class="a11y-demo">
+                        <div class="a11y-component">
+                            <h3>Семантическая разметка</h3>
+                            <p>Правильное использование HTML5 тегов для улучшения доступности</p>
+                        </div>
+                        <div class="a11y-component">
+                            <h3>ARIA атрибуты</h3>
+                            <p>Улучшение доступности для скринридеров и вспомогательных технологий</p>
+                        </div>
+                        <div class="a11y-component">
+                            <h3>Управление фокусом</h3>
+                            <p>Клавиатурная навигация и правильное управление фокусом</p>
+                        </div>
+                    </div>
+
+                    <!-- Форма -->
+                    <div style="max-width: 500px; margin: 2rem auto;">
+                        <h3 style="color: var(--text-color); margin-bottom: 1rem;">Доступная форма</h3>
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Имя *</label>
+                                <input type="text" id="name" name="name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required aria-required="true">
+                            </div>
+                            <button type="submit" class="submit-btn">Отправить сообщение</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Lighthouse -->
+            <section class="section" id="lighthouse">
+                <div class="container">
+                    <h2 class="section-title">Lighthouse аудит</h2>
+
+                    <div class="lighthouse-demo">
+                        <h3>Пример проблем и решений</h3>
+
+                        <div class="problem-section">
+                            <h4>❌ Проблемная версия</h4>
+                            <div class="bad-btn">Нажми меня</div>
+                            <p style="color: #888;">Текст с низкой контрастностью</p>
+                        </div>
+
+                        <div class="solution-section">
+                            <h4>✅ Исправленная версия</h4>
+                            <button class="good-btn">Нажми меня</button>
+                            <p>Текст с хорошей контрастностью</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="good-btn open-modal-btn">Протестировать модальное окно</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Практические занятия 15-18</p>
             </div>
-            <div class="content">
-                <div class="profile-header">
-                    <h1 class="profile-title">Информация об авторе</h1>
-                    <img class="profile-photo" src="C:\Users\frida\Desktop\FBO-15-24_Frid\src\images\glupycot.jpg" alt="Фото автора">
-                    <h2 class="profile-name">Фрид Анна Александровна</h2>
-                    <p class="profile-group">ЭФБО-15-24</p>
-                </div>
-                
-                <div class="about-me">
-                    <p>Обо мне: Родилась в москве в 2006. Ничего не сделала и в принцепе свобой горжусь. Родился, попозорил родителей и умер</p>
-                </div>
-                
-                <div class="skills-container">
-                    <div class="skill-tag">Профессионально занимаюсь ничего неделаньем</div>
-                    <div class="skill-tag">Стабильно не занимаюсь ничем интересным</div>
-                    <div class="skill-tag">Профессионально переписываюсь в интернете</div>
-                    <div class="skill-tag">Постоянно доказываю свою правоту</div>
-                </div>
-                
-                <div class="experience-section">
-                    <h2 class="section-title">Мой опыт работы</h2>
-                    <div class="experience-card">
-                        <h3 class="experience-title">Опыт 1</h3>
-                        <p class="experience-desc">Работал фантазёром. Сочинял и праздновал.</p>
-                    </div>
-                    <div class="experience-card">
-                        <h3 class="experience-title">Опыт 2</h3>
-                        <p class="experience-desc">Работал воровством. Воровал и продавал.</p>
-                    </div>
-                    <div class="experience-card">
-                        <h3 class="experience-title">Опыт 3</h3>
-                        <p class="experience-desc">Работал рэпером. Читал и пел.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="footer">Футер</div>    
-            
-        </div>
-    </body>
+        </footer>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+        <h2>Доступное модальное окно</h2>
+        <p>Это демонстрация правильно реализованного модального окна с управлением фокусом.</p>
+        <button class="close-btn" aria-label="Закрыть">×</button>
+    </div>
+
+    <script>
+        // Управление модальным окном
+        const modal = document.getElementById('modal');
+        const overlay = document.getElementById('overlay');
+        const openButtons = document.querySelectorAll('.open-modal-btn');
+        const closeButton = document.querySelector('.close-btn');
+
+        function openModal() {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            closeButton.focus();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Обработчики событий
+        openButtons.forEach(btn => {
+            btn.addEventListener('click', openModal);
+        });
+
+        closeButton.addEventListener('click', closeModal);
+        overlay.addEventListener('click', closeModal);
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Управление темой
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', function () {
+            const isDark = document.body.style.backgroundColor === 'rgb(15, 23, 42)';
+            if (isDark) {
+                document.body.style.backgroundColor = '';
+                document.body.style.color = '';
+                themeToggle.textContent = '🌙';
+            } else {
+                document.body.style.backgroundColor = '#0f172a';
+                document.body.style.color = '#e2e8f0';
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // Валидация формы
+        const form = document.querySelector('.contact-form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Форма отправлена!');
+            form.reset();
+        });
+
+        console.log('Сайт загружен и готов к работе!');
+    </script>
+</body>
+
 </html>
